@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Concresur
 {
-    public partial class Form1 : Form
+    public partial class Add_Gasto : Form
     {
-        public Form1()
+        public Add_Gasto()
         {
             InitializeComponent();
         }
