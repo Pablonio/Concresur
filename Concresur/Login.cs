@@ -19,10 +19,13 @@ namespace Concresur
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            if (txt_pswrd.Text == "password" && txt_usr.Text == "admin")
+            if (txt_pswrd.Text == "1234" && txt_usr.Text == "admin")
             {
-                Start open_ini = new Start();
-                open_ini.Show();
+
+                Bienvenido form = new Bienvenido();
+                form.Show();
+                
+                
                 this.Hide();
             }
             else

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Concresur
 {
-    public class ControlDeGastos
+    public class Utilidades
     {
-
+        // Método para calcular el saldo disponible
+        
     }
 }

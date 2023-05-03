@@ -37,7 +37,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(469, 564);
             this.Name = "Add_Gasto";
-            this.Text = "Form3";
+            this.Text = "Añadir Nuevo Gasto";
             this.ResumeLayout(false);
 
         }
