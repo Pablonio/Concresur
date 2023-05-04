@@ -35,7 +35,7 @@ namespace Concresur
             else
             {
                 agenda.SaldoDisponible = agenda.saldoInicial;
-                Start form = new Start(agenda.SaldoDisponible);
+                Form1 form = new Form1(agenda.SaldoDisponible);
                 form.Show();
 
                 this.Hide();

@@ -51,14 +51,6 @@ namespace Concresur
                 return;
             }
 
-            // Verificar si la categoría está siendo utilizada por algún gasto
-            bool categoriaEnUso = CategoriaEnUso(categoria);
-            if (categoriaEnUso)
-            {
-                // Si la categoría está siendo utilizada por algún gasto, no se puede eliminar la categoría.
-                return;
-            }
-
             if (categoria.NodoAnterior != null)
             {
                 categoria.NodoAnterior.NodoSiguiente = categoria.NodoSiguiente;
@@ -76,30 +68,6 @@ namespace Concresur
             {
                 UltimaCategoria = categoria.NodoAnterior;
             }
-        }
-
-        public bool CategoriaEnUso(ListaCategoria categoriaBuscada)
-        {
-            ListaCategoria categoriaActual = PrimerCategoria;
-            while (categoriaActual != null)
-            {
-                Gasto gastoActual = categoriaActual.PrimerGasto;
-                while (gastoActual != null)
-                {
-                    if (gastoActual.Lista == categoriaBuscada)
-                    {
-                        // Si se encuentra algún gasto que utiliza la categoría, entonces la categoría está siendo utilizada.
-                        return true;
-                    }
-
-                    gastoActual = gastoActual.NodoSiguiente;
-                }
-
-                categoriaActual = categoriaActual.NodoSiguiente;
-            }
-
-            // Si no se encontró ningún gasto que utilice la categoría, entonces la categoría no está siendo utilizada.
-            return false;
         }
 
         public void AgregarGasto(string categoria, DateTime fecha, decimal monto, string descripcion)
@@ -181,6 +149,35 @@ namespace Concresur
 
             return null;  // Si no se encuentra la categoría buscada, se devuelve null.
         }
-        
+
+        public bool ExisteGastoEnCategoria(string nombreCategoria, DateTime fecha)
+        {
+            ListaCategoria categoriaActual = PrimerCategoria;
+
+            while (categoriaActual != null)
+            {
+                if (categoriaActual.NombreCategoria == nombreCategoria)
+                {
+                    Gasto gastoActual = categoriaActual.PrimerGasto;
+
+                    while (gastoActual != null)
+                    {
+                        if (gastoActual.Fecha.Date == fecha.Date) //comparar solo la fecha
+                        {
+                            return true;
+                        }
+
+                        gastoActual = gastoActual.NodoSiguiente;
+                    }
+
+                    break;
+                }
+
+                categoriaActual = categoriaActual.NodoSiguiente;
+            }
+
+            return false;
+        }
+
     }
 }

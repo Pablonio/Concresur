@@ -26,7 +26,7 @@ namespace Concresur
         }
          
        public void Eliminar()
-        {
+       {
             if (NodoAnterior != null)
             {
                 NodoAnterior.NodoSiguiente = NodoSiguiente;

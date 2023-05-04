@@ -25,30 +25,25 @@ namespace Concresur
 
         private void add_categoria_Click(object sender, EventArgs e)
         {
-            string nombreCategoria = nme_of_ctgry.Text;  // replace with the actual name of the new category
-            nme_of_ctgry.Clear();
-            listBoxCategorias.Items.Add(nombreCategoria);
-            AgendaGastos agenda = new AgendaGastos();  // create a new instance of the AgendaGastos class
-            agenda.AgregarCategoria(nombreCategoria);  // call the AgregarCategoria function to add the new category
-        }
+            string nombreCategoria = nme_of_ctgry.Text;  // Obtener el nombre de la nueva categoría
+            nme_of_ctgry.Clear();  // Limpiar el TextBox para ingresar el nombre de la categoría
 
-        private void ActualizarListaCategorias()
-        {
-            // Limpiar el ListBox de categorías
-            listBoxCategorias.Items.Clear();
-
-            // Recorrer todas las categorías en la agenda y agregarlas al ListBox
-            ListaCategoria categoriaActual = agenda.PrimerCategoria;
-            while (categoriaActual != null)
+            // Verificar si la categoría ya existe en la agenda
+            if (agenda.BuscarCategoria(nombreCategoria) != null)
             {
-                listBoxCategorias.Items.Add(categoriaActual);
-
-                categoriaActual = categoriaActual.NodoSiguiente;
+                MessageBox.Show("La categoría ya existe en la agenda.");
+                return;
             }
+
+            // Agregar el nombre de la categoría al ListBox
+            listBoxCategorias.Items.Add(nombreCategoria);
+
+            // Agregar la categoría a la agenda
+            agenda.AgregarCategoria(nombreCategoria);
+
         }
         private void dlt_categoria_Click(object sender, EventArgs e)
         {
-
             if (listBoxCategorias.SelectedItem == null)
             {
                 // Si no se ha seleccionado ninguna categoría, muestra un mensaje de error y sale del método.
@@ -56,23 +51,24 @@ namespace Concresur
                 return;
             }
 
-            // Obtener la categoría seleccionada en el ListBox de categorías
-            ListaCategoria categoriaSeleccionada = (ListaCategoria)listBoxCategorias.SelectedItem;
+            // Obtener el nombre de la categoría seleccionada en el ListBox de categorías
+            string nombreCategoriaSeleccionada = listBoxCategorias.SelectedItem.ToString();
 
-            // Verificar si la categoría está siendo utilizada por algún gasto
-            bool categoriaEnUso = agenda.CategoriaEnUso(categoriaSeleccionada);
-            if (categoriaEnUso)
+            // Buscar la categoría correspondiente al nombre seleccionado en la lista de categorías de la agenda
+            ListaCategoria categoriaSeleccionada = agenda.BuscarCategoria(nombreCategoriaSeleccionada);
+
+            if (categoriaSeleccionada == null)
             {
-                // Si la categoría está siendo utilizada por algún gasto, muestra un mensaje de error y sale del método.
-                MessageBox.Show("La categoría seleccionada está siendo utilizada por algún gasto. No se puede eliminar.");
+                // Si no se encuentra la categoría buscada, muestra un mensaje de error y sale del método.
+                MessageBox.Show("La categoría seleccionada no existe en la agenda.");
                 return;
             }
 
             // Eliminar la categoría seleccionada de la agenda
             agenda.EliminarCategoria(categoriaSeleccionada);
 
-            // Actualizar la lista de categorías en el ListBox
-            ActualizarListaCategorias();
+            // Remover la categoría seleccionada del ListBox de categorías
+            listBoxCategorias.Items.Remove(nombreCategoriaSeleccionada);
         }
     }
 }
