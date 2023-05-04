@@ -16,13 +16,19 @@ namespace Concresur
         private decimal saldoDisponible;
         private Gastofrm gastoform;
         public ListBox.ObjectCollection Categorias => listBoxCategorias.Items;
+
         public Start(decimal saldoDisponible, AgendaGastos agenda, Gastofrm gastoform)
         {
             InitializeComponent();
             this.saldoDisponible = saldoDisponible;
             this.agenda = agenda;
             this.gastoform = gastoform;
+            if (gastoform != null)
+            {
+                gastoform.ActualizarListBoxCategorias(listBoxCategorias.Items.Cast<string>().ToList());
+            }
         }
+
         public ListBox ListBoxCategorias
         {
             get { return this.listBoxCategorias; }
