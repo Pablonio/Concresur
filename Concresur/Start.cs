@@ -12,16 +12,21 @@ namespace Concresur
 {
     public partial class Start : Form
     {
-        public AgendaGastos agenda = new AgendaGastos();
+        public AgendaGastos agenda;
         private decimal saldoDisponible;
-
-        public Start(decimal saldoDisponible)
+        private Gastofrm gastoform;
+        public ListBox.ObjectCollection Categorias => listBoxCategorias.Items;
+        public Start(decimal saldoDisponible, AgendaGastos agenda, Gastofrm gastoform)
         {
             InitializeComponent();
             this.saldoDisponible = saldoDisponible;
-
+            this.agenda = agenda;
+            this.gastoform = gastoform;
         }
-
+        public ListBox ListBoxCategorias
+        {
+            get { return this.listBoxCategorias; }
+        }
 
         private void add_categoria_Click(object sender, EventArgs e)
         {
@@ -40,6 +45,9 @@ namespace Concresur
 
             // Agregar la categoría a la agenda
             agenda.AgregarCategoria(nombreCategoria);
+
+            // Agregar la categoría al ListBox de categorías en el formulario Gastofrm
+            gastoform.ActualizarListBoxCategorias(listBoxCategorias.Items.Cast<string>().ToList());
 
         }
         private void dlt_categoria_Click(object sender, EventArgs e)
@@ -69,6 +77,10 @@ namespace Concresur
 
             // Remover la categoría seleccionada del ListBox de categorías
             listBoxCategorias.Items.Remove(nombreCategoriaSeleccionada);
+
+            // Actualizar el ListBox de categorías en el formulario Gastofrm
+            gastoform.ActualizarListBoxCategorias(listBoxCategorias.Items.Cast<string>().ToList());
+
         }
     }
 }

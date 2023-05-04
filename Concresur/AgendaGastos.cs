@@ -150,7 +150,7 @@ namespace Concresur
             return null;  // Si no se encuentra la categoría buscada, se devuelve null.
         }
 
-        public bool ExisteGastoEnCategoria(string nombreCategoria, DateTime fecha)
+        public Gasto ExisteGastoEnCategoria(string nombreCategoria, DateTime fecha)
         {
             ListaCategoria categoriaActual = PrimerCategoria;
 
@@ -162,9 +162,9 @@ namespace Concresur
 
                     while (gastoActual != null)
                     {
-                        if (gastoActual.Fecha.Date == fecha.Date) //comparar solo la fecha
+                        if (gastoActual.Fecha.Date == fecha.Date) // comparar solamente las fechas
                         {
-                            return true;
+                            return gastoActual;
                         }
 
                         gastoActual = gastoActual.NodoSiguiente;
@@ -176,7 +176,7 @@ namespace Concresur
                 categoriaActual = categoriaActual.NodoSiguiente;
             }
 
-            return false;
+            return null;
         }
 
     }
